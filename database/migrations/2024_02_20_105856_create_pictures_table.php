@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->uuid('name');
             $table->string('path', 255);
-            $table->uuid('post_id');
+            $table->uuid('post_id')->nullable();
             $table->timestamps();
 
             $table->foreign('post_id')->references('id')->on('posts')
