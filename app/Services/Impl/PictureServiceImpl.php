@@ -18,4 +18,13 @@ class PictureServiceImpl implements PictureService
 
         return $picture->save() ? $picture->path : null;
     }
+
+    public function update(string $id, array $data): bool
+    {
+        $picture = Picture::query()->find($id);
+
+        return $picture->update([
+            'post_id' => $data['postId'],
+        ]);
+    }
 }
