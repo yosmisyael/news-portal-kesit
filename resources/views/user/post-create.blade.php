@@ -77,7 +77,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         const csrfToken = '{{ csrf_token() }}';
-        const uploadURL = '{{ route('user.post.storePict') }}'
+        const uploadURL = '{{ route('user.post.storePict', ['username' => '@' . $user->username]) }}'
     </script>
     <script src="{{ asset('js/imageUploadHandler.js') }}"></script>
 @endsection
