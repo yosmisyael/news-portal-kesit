@@ -6,6 +6,7 @@ use App\Http\Requests\PostImgRequest;
 use App\Services\PictureService;
 use App\Services\UserService;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Str;
 
 class PictureController extends Controller
@@ -22,17 +23,21 @@ class PictureController extends Controller
     /**
      * Handle the image upload request for tinymce editor.
      */
-    public function __invoke(PostImgRequest $request, )
+    public function __invoke(PostImgRequest $request): JsonResponse
     {
         $image = $request->file('image');
 
         $path = '/image/users/' . $this->user->id . '/post';
-
         $name = Str::uuid();
-
         $fileName = $name . '.' . $image->getClientOriginalExtension();
 
         $image->storePubliclyAs($path, $fileName, 'public');
+
+        $imageName = $this->pictureService->save($name, $path, null);
+
+        $tempImages = $request->session()->get('temp_images', []);
+        $tempImages[] = $imageName;
+        $request->session()->put('temp_images', $tempImages);
 
         return response()
             ->json([
