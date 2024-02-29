@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PostImgRequest;
 use App\Http\Requests\PostRequest;
 use App\Services\CategoryPostService;
 use App\Services\CategoryService;
@@ -11,10 +10,8 @@ use App\Services\UserService;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
-use Illuminate\Support\Str;
 
 class UserPostController extends Controller
 {
