@@ -216,6 +216,7 @@
     'App\\Services\\UserAuthService' => 'App\\Providers\\UserServiceProvider',
     'App\\Services\\UserService' => 'App\\Providers\\UserServiceProvider',
     'App\\Services\\PostService' => 'App\\Providers\\PostServiceProvider',
+    'App\\Services\\PictureService' => 'App\\Providers\\PostServiceProvider',
     'App\\Services\\SubmissionService' => 'App\\Providers\\PostServiceProvider',
     'App\\Services\\ReviewService' => 'App\\Providers\\PostServiceProvider',
     'App\\Services\\SuspensionService' => 'App\\Providers\\PostServiceProvider',

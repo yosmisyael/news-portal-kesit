@@ -175,23 +175,4 @@ class UserPostController extends Controller
         return redirect(route('user.post.index', ['username' => '@' . $this->user->username]))
             ->with('success', 'Post has been deleted successfully');
     }
-
-    /**
-     * Handle image upload for post.
-     */
-    public function storePicture(PostImgRequest $request): JsonResponse
-    {
-        $image = $request->file('image');
-
-        $path = 'images/users/' . $this->user->id . '/post';
-
-        $fileName = Str::uuid() . '.' . $image->getClientOriginalExtension();
-
-        $image->storePubliclyAs($path, $fileName, 'public');
-
-        return response()
-            ->json([
-                'location' => '/storage/' . $path . '/' . $fileName,
-            ]);
-    }
 }
