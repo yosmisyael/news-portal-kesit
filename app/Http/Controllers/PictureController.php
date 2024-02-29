@@ -27,21 +27,21 @@ class PictureController extends Controller
     {
         $image = $request->file('image');
 
-        $path = '/image/users/' . $this->user->id . '/post';
+        $path = '/images/users/' . $this->user->id . '/post';
         $name = Str::uuid();
         $fileName = $name . '.' . $image->getClientOriginalExtension();
 
         $image->storePubliclyAs($path, $fileName, 'public');
 
-        $imageName = $this->pictureService->save($name, $path, null);
+        $this->pictureService->save($name, url('/storage' . $path . '/' . $fileName), null);
 
         $tempImages = $request->session()->get('temp_images', []);
-        $tempImages[] = $imageName;
+        $tempImages[] = $name;
         $request->session()->put('temp_images', $tempImages);
 
         return response()
             ->json([
-                'location' => url('/storage/' . $path . '/' . $fileName),
+                'location' => url('/storage' . $path . '/' . $fileName),
             ]);
     }
 }
