@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HeadlineManagementController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PictureController;
 use App\Http\Controllers\PostManagementController;
 use App\Http\Controllers\SubmissionManagementController;
 use App\Http\Controllers\SuspensionManagementController;
@@ -57,11 +58,11 @@ Route::prefix('/dashboard/{username}')->where(['username' => '^@[a-z0-9]+\d*$'])
         Route::get('/create', 'create')->name('user.post.create');
         Route::post('/', 'store')->name('user.post.store');
         Route::get('/{id}', 'show')->name('user.post.show');
-        Route::post('/image', 'storePicture')->name('user.post.storePict');
         Route::get('/{id}/edit', 'edit')->name('user.post.edit');
         Route::put('/{id}', 'update')->name('user.post.update');
         Route::delete('/{id}', 'destroy')->name('user.post.destroy');
     });
+    Route::post('/image', PictureController::class)->name('user.post.storePict');
     Route::prefix('/{postId}/submissions')->controller(UserSubmissionController::class)->group(function () {
         Route::get('/', 'index')->name('user.submission.index');
         Route::post('/', 'store')->name('user.submission.store');
