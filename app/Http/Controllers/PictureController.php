@@ -33,11 +33,12 @@ class PictureController extends Controller
 
         $image->storePubliclyAs($path, $fileName, 'public');
 
-        $this->pictureService->save($name, url('/storage' . $path . '/' . $fileName), null);
-
-        $tempImages = $request->session()->get('temp_images', []);
-        $tempImages[] = $name;
-        $request->session()->put('temp_images', $tempImages);
+        $imageId = $this->pictureService->save($name, url('/storage' . $path . '/' . $fileName), null);
+        \Log::info("saved picture: $imageId");
+        $tempImages = $request->session()->get('temp_images');
+        \Log::info("this is session temp");
+        \Log::info($tempImages);
+//        $request->session()->put('temp_images', $imageId);
 
         return response()
             ->json([

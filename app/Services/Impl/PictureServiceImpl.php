@@ -16,15 +16,11 @@ class PictureServiceImpl implements PictureService
             'post_id' => $postId ?? null,
         ]);
 
-        return $picture->save() ? $picture->path : null;
+        return $picture->save() ? $picture->id : null;
     }
 
     public function update(string $id, array $data): bool
     {
-        $picture = Picture::query()->find($id);
-
-        return $picture->update([
-            'post_id' => $data['postId'],
-        ]);
+        return Picture::query()->find($id)->update($data);
     }
 }

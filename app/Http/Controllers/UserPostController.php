@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PostRequest;
 use App\Services\CategoryPostService;
 use App\Services\CategoryService;
+use App\Services\PictureService;
 use App\Services\PostService;
 use App\Services\UserService;
 use Exception;
@@ -21,6 +22,7 @@ class UserPostController extends Controller
         private readonly UserService $userService,
         private readonly CategoryService $categoryService,
         private readonly CategoryPostService $categoryPostService,
+        private readonly PictureService $pictureService
     )
     {
         $this->middleware(function ($request, $next) {
@@ -76,6 +78,17 @@ class UserPostController extends Controller
             if ($validated['category'] && count($validated['category']) > 0) {
                 $this->categoryPostService->attachCategoriesToPost($postId, $validated['category']);
             }
+
+            $images = $request->session()->get('temp_images');
+            \Log::info("image from session: $images");
+            foreach ($images as $image) {
+                \Log::info("image from session: $image");
+                $this->pictureService->update($image, [
+                    'postId' => $image,
+                ]);
+            }
+            $request->session()->remove('temp_images');
+
             return redirect(route('user.post.show', ['username' => '@' . $this->user->username, 'id' => $postId]))
                 ->with('success', 'Post has been saved successfully');
         } catch (Exception $exception) {
